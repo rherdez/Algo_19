@@ -9,6 +9,7 @@ void agregar();
 void presentar();
 void modificar();
 void borrar();
+void ordenar();
 int main(int argc, char** argv) {
 	contador=0;
 	do{
@@ -17,6 +18,7 @@ int main(int argc, char** argv) {
 		cout<<"2) Presentar"<<endl;
 		cout<<"3) Modificar"<<endl;
 		cout<<"4) Borrar"<<endl;
+		cout<<"5) Ordenar"<<endl;
 		cout<<"0) Salir"<<endl;
 		cin>>op;
 		
@@ -32,6 +34,10 @@ int main(int argc, char** argv) {
 				break;
 			case 4:
 				borrar();
+				break;
+			case 5:
+				ordenar();
+				presentar();
 				break;
 			case 0:
 				break;
@@ -121,7 +127,21 @@ void borrar(){
 	if(pos!=-1){
 		estudiante[pos].cuenta=-1;
 		cout<<"Dato Eliminado"<<endl;
+	}		
+}
+
+void ordenar(){
+	alumno temp;
+	
+	for (int i=1; i<contador; i++){
+		for (int j=0 ; j<contador- 1; j++){
+			if (estudiante[j].promedio() < estudiante[j+1].promedio()){
+					
+				temp = estudiante[j];
+				estudiante[j] = estudiante[j+1];
+				estudiante[j+1] = temp;
+				
+			}
+		}
 	}
-	
-	
 }
