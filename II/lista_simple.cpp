@@ -9,6 +9,7 @@ nodo *I,*F,*T;
 void agregar(int x);
 void presentar();
 void buscar(int);
+void modificar();
 void llenar();
 
 int op,temp;
@@ -19,6 +20,7 @@ int main(int argc, char** argv) {
 		cout<<"2) Presentar"<<endl;
 		cout<<"3) Buscar"<<endl;
 		cout<<"4) Llenar"<<endl;
+		cout<<"5) Modificar"<<endl;
 		cout<<"0) Salir"<<endl;
 		cin>>op;
 		
@@ -35,15 +37,15 @@ int main(int argc, char** argv) {
 					cout<<"Inrgese el valor  Buscar"<<endl;
 					cin>>temp;
 					buscar(temp);
-					if(T==NULL){
-						cout<<"No se encontro el Registro"<<endl;
-					}
-					else{
-						cout<<"Id: "<<T->id<<endl;
-						
-					}
+				
 			case 4:
 				llenar();
+				break;
+			case 5:
+					cout<<"Inrgese el valor a Modificar"<<endl;
+					cin>>temp;
+					buscar(temp);
+					modificar();
 				break;
 					
 			case 0:
@@ -94,4 +96,19 @@ void llenar(){
 	for( int i=0;i<rand()%20;i++){
 		agregar(rand()%100);
 	}
+}
+
+void modificar(){
+		if(T==NULL)
+		{
+			cout<<"No se encontro el Registro"<<endl;
+		}
+		else{
+			//cout<<"Id: "<<T->id<<endl;						
+			int var;
+			cout<<"Ingrese el nuevo valor";
+			cin>>var;
+			T->id=var;
+		}
+	
 }
