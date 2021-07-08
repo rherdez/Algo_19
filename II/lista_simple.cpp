@@ -1,18 +1,20 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
-#include "nodo.h"
-
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-using namespace std;
-nodo *I,*F,*T;
-void agregar(int x);
-void presentar();
-void buscar(int);
-void modificar();
-void llenar();
-
+#include "lista.h"
+#include <stdio.h>  
+#include <windows.h> 
+ 
+lista carta;
 int op,temp;
+void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos);  
+ } 
+void dibujar(int x,int y);
+void caracteres();
 int main(int argc, char** argv) {
 	do{
 		cout<<"Menu"<<endl;
@@ -21,6 +23,12 @@ int main(int argc, char** argv) {
 		cout<<"3) Buscar"<<endl;
 		cout<<"4) Llenar"<<endl;
 		cout<<"5) Modificar"<<endl;
+		cout<<"6) Borrar Lista"<<endl;
+		cout<<"7) Borrar Nodo"<<endl;
+		cout<<"8) Ordenamiento"<<endl;
+		cout<<"9) Dibujar"<<endl;
+		cout<<"10) Caracteres"<<endl;
+		
 		cout<<"0) Salir"<<endl;
 		cin>>op;
 		
@@ -28,26 +36,44 @@ int main(int argc, char** argv) {
 			case 1:
 					cout<<"Ingrese un ID"<<endl;
 					cin>>temp;
-					agregar(temp);
+					carta.agregar(temp);
 					break;
 			case 2:
-					presentar();
+					carta.presentar();
 					break;
 			case 3:
 					cout<<"Inrgese el valor  Buscar"<<endl;
 					cin>>temp;
-					buscar(temp);
+					carta.buscar(temp);
 				
 			case 4:
-				llenar();
+				carta.llenar();
 				break;
 			case 5:
 					cout<<"Inrgese el valor a Modificar"<<endl;
 					cin>>temp;
-					buscar(temp);
-					modificar();
+					carta.buscar(temp);
+					carta.modificar();
 				break;
-					
+			case 6:
+				carta.borrar_lista();
+				break;
+			case 7:
+				cout<<"Ingrese el valor a Eliminar"<<endl;
+				cin>>temp;
+				carta.buscar(temp);
+				if(carta.T!=NULL){
+					carta.eliminar_nodo();	
+				}
+			case 8:
+				carta.ordenamiento();
+				break;
+			case 9:
+				dibujar(25,5);
+				break;
+			case 10:
+				caracteres();
+				break;		
 			case 0:
 					break;
 			default:
@@ -58,57 +84,29 @@ int main(int argc, char** argv) {
 	}while(op!=0);
 	return 0;
 }
-void agregar(int x){
-	T=new nodo();
-	T->id=x;
-	T->sig=NULL;
-	
-	if(I==NULL){
-		I=T;
+void caracteres(){
+	for(int i=0;i<255;i++){
+		cout<<i<<"->"<<char(i)<<endl;
 	}
-	else{
-		F->sig=T;
-	}
-	F=T;
+}
+void dibujar(int x,int y){
+	int numero=9;
+	int c=4;
+ 	gotoxy(x,y);
+ 	cout<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
+ 	gotoxy(x,y++);
+ 	gotoxy(x,y++);
+ 	cout<<char(186)<<"     "<<numero<<char(186);
+ 	gotoxy(x,y++);
+ 	cout<<char(186)<<"     "<<char(c)<<char(186); 
+ 	gotoxy(x,y++);
+ 	cout<<char(186)<<"      "<<char(186);
+ 	gotoxy(x,y++);
+ 	cout<<char(186)<<char(c)<<"     "<<char(186);
+ 	gotoxy(x,y++);
+ 	cout<<char(186)<<numero<<"     "<<char(186);
+ 	gotoxy(x,y++);
+ 	cout<<char(200)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(188);
+ 	gotoxy(x,y++);
 }
 
-void presentar(){
-	T=I;
-	while(T!=NULL){
-		cout<<"ID: "<<T->id<<endl;
-		T=T->sig;
-	}
-}
-void buscar(int x){
-		T=I;
-		bool encontrado=false;
-		while(T!=NULL && !encontrado){		
-			if(T->id==x){
-				encontrado=true;
-			}
-			else{
-				T=T->sig;	
-			}			
-		}	
-}
-void llenar(){
-	srand(time(NULL));
-	for( int i=0;i<rand()%20;i++){
-		agregar(rand()%100);
-	}
-}
-
-void modificar(){
-		if(T==NULL)
-		{
-			cout<<"No se encontro el Registro"<<endl;
-		}
-		else{
-			//cout<<"Id: "<<T->id<<endl;						
-			int var;
-			cout<<"Ingrese el nuevo valor";
-			cin>>var;
-			T->id=var;
-		}
-	
-}
