@@ -69,7 +69,9 @@ int main(int argc, char** argv) {
 				carta.ordenamiento();
 				break;
 			case 9:
-				dibujar(25,5);
+				dibujar(30,30);
+				dibujar(50,30);
+				dibujar(80,30);
 				break;
 			case 10:
 				caracteres();
