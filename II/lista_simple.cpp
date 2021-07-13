@@ -3,7 +3,7 @@
 #include <stdio.h>  
 #include <windows.h> 
  
-lista carta;
+lista carta, p1;
 int op,temp;
 void gotoxy(int x,int y){  
       HANDLE hcon;  
@@ -13,11 +13,19 @@ void gotoxy(int x,int y){
       dwPos.Y= y;  
       SetConsoleCursorPosition(hcon,dwPos);  
  } 
-void dibujar(int x,int y);
+void dibujar(int x,int y, int z);
 void caracteres();
 int main(int argc, char** argv) {
+	carta.llenar();
+	carta.T=carta.I;
 	do{
-		cout<<"Menu"<<endl;
+		//system("cls");
+		dibujar(10,25,carta.T->id);
+		if(p1.T!=NULL){
+			dibujar(20,25,p1.T->id);
+		}
+		
+	/*	cout<<"Menu"<<endl;
 		cout<<"1) Agregar"<<endl;
 		cout<<"2) Presentar"<<endl;
 		cout<<"3) Buscar"<<endl;
@@ -29,7 +37,10 @@ int main(int argc, char** argv) {
 		cout<<"9) Dibujar"<<endl;
 		cout<<"10) Caracteres"<<endl;
 		
-		cout<<"0) Salir"<<endl;
+		cout<<"0) Salir"<<endl;*/
+		
+		gotoxy(30,50);
+		cout<<"11.-Sacar Carta      12.-Mover"<<endl;
 		cin>>op;
 		
 		switch(op){
@@ -69,13 +80,23 @@ int main(int argc, char** argv) {
 				carta.ordenamiento();
 				break;
 			case 9:
-				dibujar(30,30);
+			/*	dibujar(30,30);
 				dibujar(50,30);
-				dibujar(80,30);
+				dibujar(80,30);*/
 				break;
 			case 10:
 				caracteres();
-				break;		
+				break;
+			case 11:
+				carta.T=carta.T->sig;
+				if(carta.T==NULL){
+					carta.T=carta.I;	
+				}
+				break;
+			case 12:
+				p1.agregar(carta.T->id);
+				carta.eliminar_nodo();
+				break;
 			case 0:
 					break;
 			default:
@@ -91,8 +112,8 @@ void caracteres(){
 		cout<<i<<"->"<<char(i)<<endl;
 	}
 }
-void dibujar(int x,int y){
-	int numero=9;
+void dibujar(int x,int y,int z){
+	int numero=z;
 	int c=4;
  	gotoxy(x,y);
  	cout<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
